@@ -42,11 +42,14 @@ if(NOT SILKWORM_CORE_ONLY)
   add_executable(db_test unit_test.cpp ${SILKWORM_DB_TESTS})
   target_link_libraries(db_test silkworm_db Catch2::Catch2)
 
+  add_executable(check_out_of_gas check_out_of_gas.cpp)
+  target_link_libraries(check_out_of_gas PRIVATE silkworm_db absl::flags_parse absl::time Boost::filesystem)
+
   add_executable(check_changes check_changes.cpp)
-  target_link_libraries(check_changes PRIVATE silkworm_db CLI11::CLI11 absl::time Boost::filesystem)
+  target_link_libraries(check_changes PRIVATE silkworm_db absl::flags_parse absl::time Boost::filesystem)
 
   add_executable(scan_txs scan_txs.cpp)
-  target_link_libraries(scan_txs PRIVATE silkworm_db CLI11::CLI11 absl::time Boost::filesystem)
+  target_link_libraries(scan_txs PRIVATE silkworm_db absl::flags_parse absl::time Boost::filesystem)
 
   find_package(CLI11 CONFIG REQUIRED)
 
@@ -63,7 +66,7 @@ if(NOT SILKWORM_CORE_ONLY)
   add_executable(blockhashes blockhashes.cpp)
   target_link_libraries(blockhashes PRIVATE silkworm_db CLI11::CLI11 Boost::filesystem)
   target_include_directories(blockhashes PRIVATE ${CMAKE_SOURCE_DIR})
-
+  
   add_executable(tx_lookup tx_lookup.cpp)
   target_link_libraries(tx_lookup PRIVATE silkworm_db CLI11::CLI11 Boost::filesystem)
   target_include_directories(tx_lookup PRIVATE ${CMAKE_SOURCE_DIR})
@@ -71,10 +74,6 @@ if(NOT SILKWORM_CORE_ONLY)
   add_executable(check_tx_lookup check_tx_lookup.cpp)
   target_link_libraries(check_tx_lookup PRIVATE silkworm_db CLI11::CLI11 Boost::filesystem)
   target_include_directories(check_tx_lookup PRIVATE ${CMAKE_SOURCE_DIR})
-
-  add_executable(history_index history_index.cpp)
-  target_link_libraries(history_index PRIVATE silkworm_db CLI11::CLI11 Boost::filesystem)
-  target_include_directories(history_index PRIVATE ${CMAKE_SOURCE_DIR})
 
   add_executable(check_blockhashes check_blockhashes.cpp)
   target_link_libraries(check_blockhashes PRIVATE silkworm_db CLI11::CLI11 Boost::filesystem)
